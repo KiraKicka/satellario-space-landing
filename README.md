@@ -2,20 +2,18 @@
 
 Marketing landing page for **SATELLARIO**, a space-tech venture providing real-time global GNSS jamming and spoofing detection through a constellation of edge-AI-powered PocketQube satellites.
 
-## Live Demo
+## Live Site
 
-Deploy via GitHub Pages: `Settings → Pages → Deploy from branch → main / root`
+**[satellario.space](https://satellario.space)**
 
-The landing page will be available at:
-```
-https://<your-username>.github.io/satellario-space-landing/
-```
+Deployed via GitHub Pages from the `master` branch root.
 
 ## Contents
 
 ```
 index.html   — Fully self-contained landing page (no external dependencies)
 README.md    — This file
+CLAUDE.md    — AI assistant context (git-ignored)
 ```
 
 ## Sections
@@ -29,16 +27,28 @@ README.md    — This file
 ## Technology
 
 - Pure HTML / CSS / JavaScript — no build step required
-- Space Grotesk + Space Mono (Google Fonts)
+- Space Grotesk + Space Mono (Google Fonts, bundled as blobs)
 - Animated orbital globe (SVG + CSS keyframes)
 - Live alert feed simulation (client-side JS)
+- Responsive: viewport meta + CSS `@media` overrides via `data-dc-tpl` selectors
+- Bundled format: assets base64+gzip compressed, unpacked at runtime
+
+## Responsive Design
+
+Mobile support is added via CSS `@media` rules injected into `<head>` that override the bundled inline styles using `!important` and `data-dc-tpl` attribute selectors. The design is identical on desktop — only layout reflows at ≤ 768 px (tablet) and ≤ 480 px (phone).
+
+Key breakpoints:
+- **≤ 768 px** — nav links hidden, hero goes single-column, 3-col grids collapse, footer 2-col
+- **≤ 480 px** — footer single-column
 
 ## Brand
 
-- **Prussian Blue** `#112F56` — authority, depth
-- **Sky Blue** `#2F6DD0` — signal, interaction (Calcio Lecco)
-- **Amber** `#B7791F` — alerts, highlights
-- **White** `#FAFBFC` — clarity, space
+| Token | Hex | Usage |
+|---|---|---|
+| Prussian Blue | `#112F56` | Authority, depth |
+| Sky Blue | `#2F6DD0` | Signal, interaction (Calcio Lecco) |
+| Amber | `#B7791F` | Alerts, highlights |
+| White | `#FAFBFC` | Clarity, space |
 
 ## Contact
 

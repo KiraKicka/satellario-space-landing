@@ -2,7 +2,69 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Bundled Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SATELLARIO — Signal Integrity from Orbit</title>
+  <style>
+    /* ── Mobile responsive overrides ──────────────────────────────────────
+       All layout is done via inline styles in the bundled template.
+       These rules use !important to override them at narrow viewports.
+       Selectors target data-dc-tpl attributes which are stable template IDs.
+    ──────────────────────────────────────────────────────────────────────── */
+
+    @media (max-width: 768px) {
+      /* Nav: reduce padding, hide links + CTA button */
+      [data-dc-tpl="7"]  { padding: 0 20px !important; height: 56px !important; }
+      [data-dc-tpl="22"] { display: none !important; }
+      [data-dc-tpl="27"] { display: none !important; }
+
+      /* Hero: remove full-viewport height, single column, hide globe animation */
+      [data-dc-tpl="28"] { min-height: auto !important; padding-bottom: 48px !important; }
+      [data-dc-tpl="31"] {
+        grid-template-columns: 1fr !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        min-height: auto !important;
+        gap: 0 !important;
+      }
+      [data-dc-tpl="56"] { display: none !important; }
+
+      /* Stats bar: 4-col → 2×2 */
+      [data-dc-tpl="43"] { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* Section vertical padding */
+      [data-dc-tpl="82"],
+      [data-dc-tpl="106"],
+      [data-dc-tpl="144"],
+      [data-dc-tpl="184"] { padding: 56px 0 !important; }
+
+      /* Section inner horizontal padding */
+      [data-dc-tpl="83"],
+      [data-dc-tpl="107"],
+      [data-dc-tpl="145"],
+      [data-dc-tpl="185"] { padding: 0 20px !important; }
+
+      /* Mission Brief: 3-col → 1-col */
+      [data-dc-tpl="90"]  { grid-template-columns: 1fr !important; }
+
+      /* Architecture: 3-col → 1-col */
+      [data-dc-tpl="115"] { grid-template-columns: 1fr !important; }
+
+      /* Live Feed: allow horizontal scroll */
+      [data-dc-tpl="154"] { overflow-x: auto !important; }
+
+      /* CTA: 2-col → 1-col */
+      [data-dc-tpl="189"] { grid-template-columns: 1fr !important; }
+
+      /* Footer: reduce padding, 4-col → 2-col */
+      [data-dc-tpl="209"] { padding: 40px 20px !important; }
+      [data-dc-tpl="211"] { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+    }
+
+    @media (max-width: 480px) {
+      /* Footer: 2-col → 1-col on phones */
+      [data-dc-tpl="211"] { grid-template-columns: 1fr !important; gap: 24px !important; }
+    }
+  </style>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #faf9f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
