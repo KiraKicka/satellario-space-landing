@@ -3,21 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SATELLARIO — Signal Integrity from Orbit</title>
-  <style>
+  <title>SATELLARIO — Signal Integrity from Orbit</title>  <style>
     /* ── Mobile responsive overrides ──────────────────────────────────────
        All layout is done via inline styles in the bundled template.
        These rules use !important to override them at narrow viewports.
        Selectors target data-dc-tpl attributes which are stable template IDs.
-    ──────────────────────────────────────────────────────────────────────── */
+     ──────────────────────────────────────────────────────────────────────── */
 
     @media (max-width: 768px) {
-      /* Nav: reduce padding, hide links + CTA button */
+      /* Nav: reduce padding, hide original links + CTA button */
       [data-dc-tpl="7"]  { padding: 0 20px !important; height: 56px !important; }
       [data-dc-tpl="22"] { display: none !important; }
       [data-dc-tpl="27"] { display: none !important; }
 
-      /* Hero: remove full-viewport height, single column, hide globe animation */
+      /* Hero: remove full-viewport height, single column */
       [data-dc-tpl="28"] { min-height: auto !important; padding-bottom: 48px !important; }
       [data-dc-tpl="31"] {
         grid-template-columns: 1fr !important;
@@ -26,7 +25,22 @@
         min-height: auto !important;
         gap: 0 !important;
       }
-      [data-dc-tpl="56"] { display: none !important; }
+      
+      /* Keep the globe visible, center and scale it down on mobile */
+      [data-dc-tpl="56"] {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: auto !important;
+        min-height: 280px !important;
+        max-height: 380px !important;
+        margin: 32px auto 0 !important;
+      }
+      [data-dc-tpl="56"] svg {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 340px !important;
+      }
 
       /* Stats bar: 4-col → 2×2 */
       [data-dc-tpl="43"] { grid-template-columns: repeat(2, 1fr) !important; }
@@ -60,9 +74,181 @@
       [data-dc-tpl="211"] { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
     }
 
+    @media (max-width: 600px) {
+      /* Optimize Live Feed Grid Columns on Mobile: hide ECEF (4th column) */
+      [data-dc-tpl="144"] div[style*="grid-template-columns"] {
+        grid-template-columns: 70px 1fr 90px 58px !important;
+        gap: 8px !important;
+        padding: 10px 12px !important;
+      }
+      [data-dc-tpl="144"] div[style*="grid-template-columns"] > span:nth-child(4) {
+        display: none !important;
+      }
+    }
+
     @media (max-width: 480px) {
       /* Footer: 2-col → 1-col on phones */
       [data-dc-tpl="211"] { grid-template-columns: 1fr !important; gap: 24px !important; }
+    }
+
+    /* ── Premium Interactions and Hover Transitions (Desktop & General) ── */
+    
+    /* Card hover lift & shadows */
+    [data-dc-tpl="90"] > div,
+    [data-dc-tpl="115"] > div {
+      position: relative;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    
+    [data-dc-tpl="90"] > div:hover,
+    [data-dc-tpl="115"] > div:hover {
+      transform: translateY(-5px) !important;
+      box-shadow: 0 16px 36px rgba(17, 47, 86, 0.08) !important;
+      background-color: #FAF9F5 !important;
+      z-index: 2 !important;
+    }
+
+    /* ── Mobile Menu Hamburger & Drawer ── */
+    .mobile-menu-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 210;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 20px;
+    }
+
+    .mobile-menu-toggle span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #0F1B2D;
+      border-radius: 2px;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-menu-toggle.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .mobile-menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .mobile-menu-toggle.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: flex;
+      }
+    }
+
+    .mobile-menu-drawer {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: rgba(250, 251, 252, 0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(17, 47, 86, 0.12);
+      z-index: 199;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 20px 32px;
+      gap: 16px;
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-menu-drawer.open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-menu-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: #56657C;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(17, 47, 86, 0.05);
+      transition: color 0.15s, padding-left 0.2s;
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    .mobile-menu-drawer.open .mobile-menu-link {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Staggered mobile menu items */
+    .mobile-menu-drawer.open .mobile-menu-link:nth-child(1) { transition-delay: 0.05s; }
+    .mobile-menu-drawer.open .mobile-menu-link:nth-child(2) { transition-delay: 0.10s; }
+    .mobile-menu-drawer.open .mobile-menu-link:nth-child(3) { transition-delay: 0.15s; }
+    .mobile-menu-drawer.open .mobile-menu-link:nth-child(4) { transition-delay: 0.20s; }
+    .mobile-menu-drawer.open .mobile-menu-cta { transition-delay: 0.25s; }
+
+    .mobile-menu-link:active,
+    .mobile-menu-link:hover {
+      color: #2F6DD0;
+      padding-left: 8px;
+    }
+
+    .mobile-menu-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #ffffff;
+      background: #2F6DD0;
+      border: 1px solid #2F6DD0;
+      padding: 14px;
+      text-align: center;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      margin-top: 10px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: background 0.15s, 
+                  transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-menu-cta:active {
+      background: #1E4FA0;
+    }
+
+    /* ── Scroll Reveal Animations ── */
+    .reveal-element {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .reveal-element.revealed {
+      opacity: 1;
+      transform: translateY(0) !important;
     }
   </style>
   <style>
@@ -184,12 +370,24 @@ document.addEventListener('DOMContentLoaded', async function() {
       template = template.slice(0, i) + resourceScript + template.slice(i);
     }
 
+    // Save styles from the original document before swapping it
+    const oldStyles = Array.from(document.querySelectorAll('style'));
+
     // Parse the template and swap the root element. Scripts inserted via
     // DOMParser/replaceWith are inert per spec — re-create each with
     // createElement so they execute, awaiting onload for src scripts to
     // preserve ordering (React before ReactDOM before Babel before text/babel).
     const doc = new DOMParser().parseFromString(template, 'text/html');
     document.documentElement.replaceWith(doc.documentElement);
+
+    // Re-inject saved style elements so they continue to apply
+    const newHead = document.head || document.getElementsByTagName('head')[0];
+    if (newHead) {
+      for (const style of oldStyles) {
+        newHead.appendChild(style);
+      }
+    }
+
     const dead = Array.from(document.scripts);
     for (const old of dead) {
       const s = document.createElement('script');
@@ -213,6 +411,96 @@ document.addEventListener('DOMContentLoaded', async function() {
     if (window.Babel && typeof window.Babel.transformScriptTags === 'function') {
       window.Babel.transformScriptTags();
     }
+
+    // Mobile menu toggle implementation
+    function initMobileMenu() {
+      const navInner = document.querySelector('[data-dc-tpl="7"]');
+      if (!navInner) return;
+      if (document.querySelector('.mobile-menu-toggle')) return;
+
+      const toggleBtn = document.createElement('button');
+      toggleBtn.className = 'mobile-menu-toggle';
+      toggleBtn.setAttribute('aria-label', 'Toggle Navigation Menu');
+      toggleBtn.innerHTML = '<span></span><span></span><span></span>';
+      navInner.appendChild(toggleBtn);
+
+      const drawer = document.createElement('div');
+      drawer.className = 'mobile-menu-drawer';
+      drawer.innerHTML = `
+        <a href="#mission" class="mobile-menu-link">Mission</a>
+        <a href="#architecture" class="mobile-menu-link">Architecture</a>
+        <a href="#feed" class="mobile-menu-link">Live Feed</a>
+        <a href="#access" class="mobile-menu-link">Access</a>
+        <a href="#access" class="mobile-menu-cta">Request Access</a>
+      `;
+      document.body.appendChild(drawer);
+
+      toggleBtn.addEventListener('click', function() {
+        toggleBtn.classList.toggle('active');
+        drawer.classList.toggle('open');
+      });
+
+      const links = drawer.querySelectorAll('a');
+      for (const link of links) {
+        link.addEventListener('click', function() {
+          toggleBtn.classList.remove('active');
+          drawer.classList.remove('open');
+        });
+      }
+    }
+
+    // Scroll reveal implementation
+    function initScrollReveal() {
+      const elements = [
+        document.querySelector('#mission h2'),
+        document.querySelector('[data-dc-tpl="90"]'),
+        document.querySelector('#architecture h2'),
+        document.querySelector('#architecture p'),
+        document.querySelector('[data-dc-tpl="115"]'),
+        document.querySelector('#architecture blockquote'),
+        document.querySelector('#feed h2'),
+        document.querySelector('#feed p'),
+        document.querySelector('#feed > div > div:last-child'),
+        document.querySelector('#access > div > div')
+      ].filter(Boolean);
+
+      elements.forEach(function(el) {
+        el.classList.add('reveal-element');
+      });
+
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function(entries, obs) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, {
+          root: null,
+          threshold: 0.12
+        });
+
+        elements.forEach(function(el) {
+          observer.observe(el);
+        });
+      } else {
+        // Fallback for older browsers
+        elements.forEach(function(el) {
+          el.classList.add('revealed');
+        });
+      }
+    }
+
+    function runWhenMounted() {
+      if (document.querySelector('[data-dc-tpl="7"]')) {
+        initMobileMenu();
+        initScrollReveal();
+      } else {
+        setTimeout(runWhenMounted, 50);
+      }
+    }
+    runWhenMounted();
   } catch (err) {
     setStatus('Error unpacking: ' + err.message);
     console.error('Bundle unpack error:', err);
