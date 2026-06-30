@@ -393,6 +393,20 @@ document.addEventListener('DOMContentLoaded', async function() {
     // createElement so they execute, awaiting onload for src scripts to
     // preserve ordering (React before ReactDOM before Babel before text/babel).
     const doc = new DOMParser().parseFromString(template, 'text/html');
+
+    // Patch feed list to start at top (column) and prepend new alerts
+    const feedList = doc.querySelector('#feed div[style*="column-reverse"]');
+    if (feedList) {
+      feedList.style.flexDirection = 'column';
+    }
+    const dcScript = doc.querySelector('script[data-dc-script]');
+    if (dcScript) {
+      dcScript.textContent = dcScript.textContent.replace(
+        'alerts: [...s.alerts, this._mkAlert()]',
+        'alerts: [this._mkAlert(), ...s.alerts]'
+      );
+    }
+
     document.documentElement.replaceWith(doc.documentElement);
 
     // Re-inject saved style elements so they continue to apply
