@@ -1,0 +1,10 @@
+<svg class="mk" width="1024" height="1024" viewBox="0 0 100 100" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" data-om-id="ca7328eb:15" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 26 V10 H26" data-om-id="ca7328eb:16"/><path d="M74 10 H90 V26" data-om-id="ca7328eb:17"/><path d="M10 74 V90 H26" data-om-id="ca7328eb:18"/><path d="M74 90 H90 V74" data-om-id="ca7328eb:19"/>
+      <line class="arm-draw" pathLength="100" x1="61.4" y1="23.6" x2="50" y2="50" data-om-id="ca7328eb:20"/>
+      <line class="arm-draw" style="animation-delay:.7s" pathLength="100" x1="50" y1="50" x2="30.4" y2="75.5" data-om-id="ca7328eb:21"/>
+      <line class="arm-draw" style="animation-delay:1.3s" pathLength="100" x1="50" y1="50" x2="62.5" y2="71.1" data-om-id="ca7328eb:22"/>
+      <circle class="np" cx="61.4" cy="23.6" r="4.5" fill="#000000" stroke="none" data-om-id="ca7328eb:23"/>
+      <circle class="hub-anim" cx="50" cy="50" r="6.2" fill="#000000" stroke="none" data-om-id="ca7328eb:24"/>
+      <circle class="np" style="animation-delay:.6s" cx="30.4" cy="75.5" r="4.5" fill="#000000" stroke="none" data-om-id="ca7328eb:25"/>
+      <circle class="np" style="animation-delay:1.2s" cx="62.5" cy="71.1" r="4.5" fill="#000000" stroke="none" data-om-id="ca7328eb:26"/>
+    </svg>
