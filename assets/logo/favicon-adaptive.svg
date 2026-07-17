@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 100 100">
+  <style>
+    :root { color: #112F56; }
+    @media (prefers-color-scheme: dark) { :root { color: #FAFBFC; } }
+  </style>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+    <path d="M10 26 V10 H26"/><path d="M74 10 H90 V26"/>
+    <path d="M10 74 V90 H26"/><path d="M74 90 H90 V74"/>
+    <line x1="61.4" y1="23.6" x2="50" y2="50"/>
+    <line x1="50" y1="50" x2="30.4" y2="75.5"/>
+    <line x1="50" y1="50" x2="62.5" y2="71.1"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="61.4" cy="23.6" r="4.5"/>
+    <circle cx="50" cy="50" r="6.2"/>
+    <circle cx="30.4" cy="75.5" r="4.5"/>
+    <circle cx="62.5" cy="71.1" r="4.5"/>
+  </g>
+</svg>
